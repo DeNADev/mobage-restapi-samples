@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>MyGameServer</display-name>
+	<servlet>
+		<!--  This provides endpoints to perform OAuth 3-legged authentication with Mobage platform. -->
+		<servlet-name>mobageAuth</servlet-name>
+		<servlet-class>com.mobage.sample.servlets.UserAuth</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>mobageAuth</servlet-name>
+		<url-pattern>/request_temporary_credential</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>mobageAuth</servlet-name>
+		<url-pattern>/request_token</url-pattern>
+	</servlet-mapping>
+	
+	<!-- People API -->
+	<servlet>
+		<servlet-name>people</servlet-name>
+		<servlet-class>com.mobage.sample.servlets.PeopleGet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>people</servlet-name>
+		<url-pattern>/people_get</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Bank API -->
+	<servlet>
+		<servlet-name>BankDebitPost</servlet-name>
+		<servlet-class>com.mobage.sample.servlets.BankDebitPost</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BankDebitPost</servlet-name>
+		<url-pattern>/bank_debit_post</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>BankDebitPut</servlet-name>
+		<servlet-class>com.mobage.sample.servlets.BankDebitPut</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BankDebitPut</servlet-name>
+		<url-pattern>/bank_debit_put</url-pattern>
+	</servlet-mapping>
+</web-app>

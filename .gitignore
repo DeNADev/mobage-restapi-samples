@@ -1,1 +1,9 @@
 .cache
+java/.metadata
+java/Servers
+java/RemoteSystemsTempFiles
+java/MyGameServer/WebContent/WEB-INF/lib
+java/MyGameServer/target
+.classpath
+.project
+java/MyGameServer/.settings
