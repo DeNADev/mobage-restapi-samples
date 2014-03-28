@@ -7,3 +7,9 @@ java/MyGameServer/target
 .classpath
 .project
 java/MyGameServer/.settings
+*.dll
+*.suo
+*.user
+dotnet/MyGameServer/packages
+dotnet/MyGameServer/MyGameServer/bin
+dotnet/MyGameServer/MyGameServer/obj
