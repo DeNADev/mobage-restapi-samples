@@ -9,17 +9,11 @@ mobage-restapi-samples/php
 たとえば、remote_notification_post_jp_kr_cn_tc.php がその例です。
 この場合、プラットフォーム間で仕様が異なりますのでご注意下さい。
 
-※ これらのサンプルは Mobage RESTful API の動作をブラウザー経由で確認するために提供しています。
-クライアントとの通信のために作られたものではありません。
-
 ※ OAuth 認証の部分は下記ライブラリを利用しています。
 ライセンスに関しては MyGameServer/External/LICENSE.txt をご参照下さい。
 自前で OAuth を実装するコストが高いため、可能な限り既存 OAuth ライブラリを利用することを推奨します。  
 プロジェクトページリンク > http://oauth.googlecode.com/  
 Ouath.phpリンク > http://oauth.googlecode.com/svn/code/php/
-
-※ 現在のところ、PHP のサンプルだけを提供しています。
-ほかの言語のサンプルが必要な場合、ご相談下さい。
 
 下記手順でサンプルを利用できます。
 

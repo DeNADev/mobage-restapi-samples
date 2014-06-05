@@ -93,7 +93,7 @@ if ($verbose) {
 	print("<pre>".$response."</pre>");
 } else {
 	// never pass secret or oauth2_token back to client
-	print($parsed_parameters["oauth_token"]);
+	print(json_encode(array("oauth_token" => $parsed_parameters["oauth_token"])));
 }
 
 ?>

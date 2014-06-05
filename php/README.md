@@ -5,14 +5,9 @@ This is a set of samples that shows how to use the Mobage REST APIs in PHP.
 
 Each file is named such that it follows the pattern [API NAME]_[HTTP Method].php with a few exceptions that is self-explained. Also, file names might indicate the platform that it supports, for example remote_notification_post_jp_kr_cn_tc.php when implementations differ largely between platforms.
 
-NOTE: These samples serve only to understand the usage of Mobage REST APIs through a standard web browser and cannot be used as-is to bind with your Android or iOS client.
-
 NOTE: We use the OAuth library (OAuth.php) from the following location. Please see MyGameServer/External/LICENSE.txt. We encourage developers to use existing and well established OAuth libraries to authenticate with Mobage because it is very time consuming and error prone to brew your own.  
 Project Page Link > http://oauth.googlecode.com/  
 Ouath.php Link > http://oauth.googlecode.com/svn/code/php/
-
-
-NOTE: Currently only PHP samples are provided, samples for other languages might be added in the future depending on developer demand. Please contact your point of connection if you have such needs.
 
 To the bare minimum, do the following to start experimenting with the samples.
 
