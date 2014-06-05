@@ -38,7 +38,7 @@ $consumerSecret_sandbox = "YOUR_SANDBOX_CONSUMER_SECRET";
 $consumerKey_production    = "YOUR_PRODUCTION_CONSUMER_KEY";
 $consumerSecret_production = "YOUR_PRODUCTION_CONSUMER_SECRET";
 
-$verbose = true; // set this to true for debugging
+$verbose = false; // set this to true for debugging
 
 //
 // Nothing you should edit below this line

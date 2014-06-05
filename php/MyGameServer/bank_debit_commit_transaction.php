@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-// this is an example of putting a bank transaction to different state
+// this is an example of open-and-close a transaction in one shot
 require_once("External/OAuth.php");
 require_once("config.php");
 require_once("datastore.php");
@@ -40,16 +40,17 @@ if (isset($_REQUEST['transaction_id'])) {
 	$url_fragment .= "/".$datastore['id']."?fields=state";
 }
 
-$body = array(
-	"state" => $_REQUEST['state']
-);
-
 // generate Authentication Header
 $endpoint = $bank_endpoint . $url_fragment;
 $auth_header = array(
 "Authorization: bearer " . $datastore["oauth2_token"],
 "Accept: */*",
 "Content-Type: application/json; charset=utf-8"
+);
+
+// first open the transaction
+$body = array(
+	"state" => "open"
 );
 
 // access to platform server
@@ -72,6 +73,8 @@ curl_setopt($curl, CURLOPT_HEADER, true);
 $response = curl_exec($curl);
 fclose($putData);
 
+// response code
+$curl_http_code       = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 // request header
 $curl_header_req      = curl_getinfo($curl, CURLINFO_HEADER_OUT);
 // response header and body
@@ -80,6 +83,76 @@ $curl_header_res      = substr($response, 0, $curl_header_res_size);
 $curl_body_res        = substr($response, $curl_header_res_size);
 
 curl_close($curl);
+
+/*
+ * TODO: Error handling, we simply pass through the error code here
+ *
+ */
+if ($curl_http_code != 202) {
+	http_response_code($curl_http_code);
+	print($curl_body_res);
+	exit;
+}
+
+/*
+ * TODO: Successfully opened transaction.
+ * Give the purchased item to the user here, step 14 in following reference
+ * https://docs.mobage.com/display/JPSA/How_to_use_the_Currency_Commerce_Services_Native
+ *
+ */
+
+// then close the transaction
+$body = array(
+	"state" => "closed"
+);
+
+// access to platform server
+$putString = json_encode($body); 
+$putData = tmpfile(); 
+fwrite($putData, $putString); 
+fseek($putData, 0); 
+
+$curl = curl_init($endpoint);
+curl_setopt($curl, CURLOPT_PUT, true);
+curl_setopt($curl, CURLOPT_INFILE, $putData);
+curl_setopt($curl, CURLOPT_INFILESIZE, strlen($putString));
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($curl, CURLOPT_FAILONERROR, false);
+curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($curl, CURLOPT_ENCODING , "gzip");
+curl_setopt($curl, CURLOPT_HTTPHEADER, $auth_header);
+curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+curl_setopt($curl, CURLOPT_HEADER, true);
+$response = curl_exec($curl);
+fclose($putData);
+
+// response code
+$curl_http_code       = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+// request header
+$curl_header_req      = curl_getinfo($curl, CURLINFO_HEADER_OUT);
+// response header and body
+$curl_header_res_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+$curl_header_res      = substr($response, 0, $curl_header_res_size);
+$curl_body_res        = substr($response, $curl_header_res_size);
+
+curl_close($curl);
+
+/*
+ * TODO: Error handling, we simply pass through the error code here
+ *
+ */
+if ($curl_http_code != 202) {
+	http_response_code($curl_http_code);
+	print($curl_body_res);
+	exit;
+}
+
+/*
+ * TODO: Successfully closed transaction
+ * Commit the purchased item, step 21 in following reference
+ * https://docs.mobage.com/display/JPSA/How_to_use_the_Currency_Commerce_Services_Native
+ *
+ */
 
 if ($verbose) {
 	print("<h2>Session</h2>");

@@ -33,8 +33,10 @@ $url_fragment = "/bank/debit/@app";
 // retrieve saved values
 $datastore = read_array_from_session();
 
-// check whether list of item ids is set
-if (isset($datastore['id'])) {
+// prioritized transaction id given in request
+if (isset($_REQUEST['transaction_id'])) {
+	$url_fragment .= "/".$_REQUEST['transaction_id'];
+} else if (isset($datastore['id'])) {
 	$url_fragment .= "/".$datastore['id'];
 }
 
