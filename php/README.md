@@ -9,9 +9,6 @@ NOTE: We use the OAuth library (OAuth.php) from the following location. Please s
 Project Page Link > http://oauth.googlecode.com/  
 Ouath.php Link > http://oauth.googlecode.com/svn/code/php/
 
-
-NOTE: Currently only PHP samples are provided, samples for other languages might be added in the future depending on developer demand. Please contact your point of connection if you have such needs.
-
 To the bare minimum, do the following to start experimenting with the samples.
 
 Authorization

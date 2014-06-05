@@ -15,9 +15,6 @@ mobage-restapi-samples/php
 プロジェクトページリンク > http://oauth.googlecode.com/  
 Ouath.phpリンク > http://oauth.googlecode.com/svn/code/php/
 
-※ 現在のところ、PHP のサンプルだけを提供しています。
-ほかの言語のサンプルが必要な場合、ご相談下さい。
-
 下記手順でサンプルを利用できます。
 
 OAuth 3-legged 認証
