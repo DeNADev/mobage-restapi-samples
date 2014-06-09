@@ -34,8 +34,6 @@ $url_fragment = "/remote_notification/@app/@all";
 // check whether optional ids is set
 if (isset($_REQUEST['user_ids'])) {
 	$url_fragment .= "/".$_REQUEST['user_ids']."/state";
-} else {
-	$url_fragment .= "/@me/state";
 }
 
 // for other query params
