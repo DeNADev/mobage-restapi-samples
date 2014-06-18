@@ -48,6 +48,6 @@ OAuth 3-legged 認証
 
 Mobage RESTful APIを利用してみる
 -------------------
-下記のMobage RESTful APIドキュメントを参考し、app.jsにWeb Methodを追加し結果を確認します。
+下記のMobage RESTful APIドキュメントを参考し、色々とapp.jsに追加し試してみてください。
 https://docs.mobage.com/display/JPSA/REST_API_Reference_JP
 
