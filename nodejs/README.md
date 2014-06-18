@@ -8,13 +8,7 @@ mobage-restapi-samples/nodejs
 1. OAuth 3-legged 認証
 2. RESTful APIの確認用の簡単サンプル
 
-
-※ OAuth 認証の部分は下記ライブラリを利用しています。
-* ライブラリ名 : OAuth Core 1.0
-* プロジェクトページ : http://oauth.net/core/1.0a/
-* ライセンス : http://oauth.net/license/core/1.0/
-
-
+※ OAuth 認証の部分は node-oauth モジュールを利用しています。
 
 下記手順でサンプルを利用できます。
 
