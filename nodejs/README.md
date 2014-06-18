@@ -22,8 +22,8 @@ OAuth 3-legged 認証
 -------------------
 
 1. node.js の実行は、npm install してから node app.jsを実行します。
-2. config.json を編集し、YOUR_SANDBOX_CONSUMER_KEY, YOUR_SANDBOX_CONSUMER_SECRETにアプリ専用の値に設定します。
-　＊本番環境の場合はYOUR_PRODUCTION_CONSUMER_KEY, YOUR_PRODUCTION_CONSUMER_SECRETを設定します。
+2. config.json を編集し、YOUR_SANDBOX_CONSUMER_KEY, YOUR_SANDBOX_CONSUMER_SECRETにアプリ専用の値に設定します。  
+＊本番環境の場合はYOUR_PRODUCTION_CONSUMER_KEY, YOUR_PRODUCTION_CONSUMER_SECRETを設定します。
 3. ウェブブラウザーから、/nodejs/request_temporary_credential をアクセスします。
 例：http://localhost:3000/nodejs/request_temporary_credential
 4. Temporary Token が表示されます。
