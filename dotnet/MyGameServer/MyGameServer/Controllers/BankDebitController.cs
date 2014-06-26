@@ -59,7 +59,7 @@ namespace MyGameServer.Controllers
                 byte[] postByte = encoding.GetBytes(postData);
 
                 // Bank API uses OAuth2 bearer token
-                string authHeader = "bearer " + Session[MobageOAuth.OAUTH2_TOKEN];
+                string authHeader = "Bearer " + Session[MobageOAuth.OAUTH2_TOKEN];
 
                 HttpWebRequest request =
                     (HttpWebRequest)WebRequest.Create(MobageOAuth.GetBankEndpoint() + "/bank/debit/@app");
@@ -161,7 +161,7 @@ namespace MyGameServer.Controllers
                 byte[] postByte = encoding.GetBytes(postData);
 
                 // Bank API uses OAuth2 bearer token
-                string authHeader = "bearer " + Session[MobageOAuth.OAUTH2_TOKEN];
+                string authHeader = "Bearer " + Session[MobageOAuth.OAUTH2_TOKEN];
 
                 HttpWebRequest request =
                     (HttpWebRequest)WebRequest.Create(MobageOAuth.GetBankEndpoint() + "/bank/debit/@app/" + transactionId + "?fields=state");
