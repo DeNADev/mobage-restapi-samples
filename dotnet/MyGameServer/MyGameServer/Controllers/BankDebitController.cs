@@ -100,9 +100,7 @@ namespace MyGameServer.Controllers
                 if (response != null) { response.Close(); }
             }
 
-            JObject jsonResult = new JObject();
-            jsonResult["result"] = "success";
-            jsonResult["payload"] = JObject.Parse(responseBody);;
+            JObject jsonResult = JObject.Parse(responseBody);
 
             return new ContentResult
             {
@@ -112,30 +110,44 @@ namespace MyGameServer.Controllers
         }
 
         //
-        // GET: /BankDebit/Open?transaction=TTTTTTTT
+        // GET: /BankDebit/Open?transaction_id=TTTTTTTT
         // Open Bank transaction after user confirmation
         
         public ActionResult Open()
         {
-            return this.UpdateTransaction(Request["transaction"], "open");
+            return this.UpdateTransaction(Request["transaction_id"], "open");
         }
 
         //
-        // GET: /BankDebit/Close?transaction=TTTTTTTT
+        // GET: /BankDebit/Close?transaction_id=TTTTTTTT
         // Close Bank transaction after open
 
         public ActionResult Close()
         {
-            return this.UpdateTransaction(Request["transaction"], "closed");
+            return this.UpdateTransaction(Request["transaction_id"], "closed");
         }
 
         //
-        // GET: /BankDebit/Cancel?transaction=TTTTTTTT
+        // GET: /BankDebit/CommitTransaction?transaction_id=TTTTTTTT
+        // Open and close bank transaction in one call
+
+        public ActionResult CommitTransaction()
+        {
+            ActionResult result = this.Open();
+            if (result != null && result is ContentResult)
+            {
+                return this.Close();
+            }
+            return result;
+        }
+
+        //
+        // GET: /BankDebit/Cancel?transaction_id=TTTTTTTT
         // Cancel Bank transaction
 
         public ActionResult Cancel()
         {
-            return this.UpdateTransaction(Request["transaction"], "canceled");
+            return this.UpdateTransaction(Request["transaction_id"], "canceled");
         }
 
         private ActionResult UpdateTransaction(string transactionId, string state)
@@ -202,9 +214,7 @@ namespace MyGameServer.Controllers
                 if (response != null) { response.Close(); }
             }
 
-            JObject jsonResult = new JObject();
-            jsonResult["result"] = "success";
-            jsonResult["payload"] = JObject.Parse(responseBody); ;
+            JObject jsonResult = JObject.Parse(responseBody); ;
 
             return new ContentResult
             {

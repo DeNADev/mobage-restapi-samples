@@ -123,15 +123,8 @@ namespace MyGameServer.Controllers
             Session[MobageOAuth.OAUTH_TOKEN_SECRET] = accessTokenSecret;
             Session[MobageOAuth.OAUTH2_TOKEN] = oauth2Token;
 
-            JObject payload = new JObject();
-            // returns a server generated session ID if you are not using cookie
-            // for example, if you are storing access token, access token secret and oauth2 token in DB,
-            // use this session ID to get those credentials on user's return
-            //payload["ssid"] = {generated unique session ID};
-
             JObject jsonResult = new JObject();
-            jsonResult["result"] = "success";
-            jsonResult["payload"] = payload;
+            jsonResult["oauth_token"] = accessToken;
 
             return new ContentResult
             {
