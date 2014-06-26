@@ -88,12 +88,8 @@ public class UserAuth extends HttpServlet {
             s.setAttribute(MobageOAuth.OAUTH_TOKEN_SECRET, temporaryTokenSecret);
             
             // prepares result
-            JsonObject payload = new JsonObject();
-            payload.addProperty("token", temporaryToken);
-            
             JsonObject jsonResult = new JsonObject();
-            jsonResult.addProperty("result", "success");
-            jsonResult.add("payload", payload);
+            jsonResult.addProperty("oauth_token", temporaryToken);
             
             // returns only the temporary token to the client
             response.setContentType("application/json; charset=utf-8");
@@ -150,13 +146,7 @@ public class UserAuth extends HttpServlet {
             
             // prepares result
             JsonObject jsonResult = new JsonObject();
-            jsonResult.addProperty("result", "success");
-            
-            // returns a server generated session ID if you are not using cookie
-            // for example, if you are storing access token, access token secret
-            // and oauth2 token in DB, use this session ID to get those credentials 
-            // on user's return
-            jsonResult.add("payload", new JsonObject());
+            jsonResult.addProperty("oauth_token", accessToken);
             
             response.setContentType("application/json; charset=utf-8");
             response.setCharacterEncoding("UTF-8");

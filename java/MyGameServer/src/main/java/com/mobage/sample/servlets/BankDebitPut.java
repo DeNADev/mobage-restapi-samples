@@ -40,78 +40,127 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mobage.sample.commons.MobageOAuth;
+import com.mobage.sample.datatype.bank.Transaction;
 
 /**
  * Servlet implementation class BankDebitPut
  */
 public class BankDebitPut extends HttpServlet {
     private static final long serialVersionUID = 1L;
-       
+
+    class TransactionUpdateException extends Exception {
+        TransactionUpdateException(String message) {
+            super(message);
+        }
+    }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+        String url = request.getRequestURL().toString();
+        if (url.endsWith("/bank_debit_put")) {
+            bankDebitPut(request, response);
+        } else if (url.endsWith("/bank_debit_commit_transaction")) {
+            bankDebitCommitTransaction(request, response);
+        }
+    }
+
+    private void bankDebitPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Bank API uses OAuth 2 so we only needs the bearer token
         HttpSession s = request.getSession();
         String oauth2Token = (String)s.getAttribute(MobageOAuth.OAUTH2_TOKEN);
-        
-        String transactionId = request.getParameter("transaction");
+
+        String transactionId = request.getParameter("transaction_id");
         if (transactionId == null || transactionId.length() == 0) {
             response.sendError(400, "Missing parameter");
             return;
         }
-        
+
         String state = request.getParameter("state");
         if (state == null || state.length() == 0) {
             response.sendError(400, "Missing parameter");
             return;
         }
-        
+
+        PrintWriter out = null;
+        try {
+            JsonObject jsonResult = updateTransaction(transactionId, state, oauth2Token);
+
+            response.setContentType("application/json; charset=utf-8");
+            response.setCharacterEncoding("UTF-8");
+            out = response.getWriter();
+            out.println(jsonResult.toString());
+        } catch (Exception e) {
+            response.sendError(500, e.getMessage());
+        } finally {
+            if (out != null) try{out.close();}catch(Exception ignore){}
+        }
+    }
+
+    private void bankDebitCommitTransaction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Bank API uses OAuth 2 so we only needs the bearer token
+        HttpSession s = request.getSession();
+        String oauth2Token = (String)s.getAttribute(MobageOAuth.OAUTH2_TOKEN);
+
+        String transactionId = request.getParameter("transaction_id");
+        if (transactionId == null || transactionId.length() == 0) {
+            response.sendError(400, "Missing parameter");
+            return;
+        }
+
+        PrintWriter out = null;
+        try {
+            JsonObject jsonResult;
+
+            jsonResult = updateTransaction(transactionId, Transaction.OPEN, oauth2Token);
+            jsonResult = updateTransaction(transactionId, Transaction.CLOSED, oauth2Token);
+
+            response.setContentType("application/json; charset=utf-8");
+            response.setCharacterEncoding("UTF-8");
+            out = response.getWriter();
+            out.println(jsonResult.toString());
+        } catch (Exception e) {
+            response.sendError(500, e.getMessage());
+        } finally {
+            if (out != null) try{out.close();}catch(Exception ignore){}
+        }
+    }
+
+    private JsonObject updateTransaction(String transactionId, String state, String oauth2Token) throws TransactionUpdateException {
         JsonObject stateJson = new JsonObject();
         stateJson.addProperty("state", state);
-        
+
         HttpURLConnection connection = null;
         DataOutputStream wr = null;
-        PrintWriter out = null;
-        
+
         try {
             String endpoint = MobageOAuth.getBankEndpoint() + "/bank/debit/@app/" + transactionId + "?fields=state";
             URL url = new URL(endpoint);
             connection = (HttpURLConnection) url.openConnection();
-            
+
             // send POST
             connection.setRequestMethod("PUT");
             connection.setRequestProperty("Authorization", "Bearer "+oauth2Token);
             connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
             connection.setRequestProperty("Accept", "*/*");
             connection.setDoOutput(true);
-            
+
             wr = new DataOutputStream(connection.getOutputStream());
             wr.writeBytes(stateJson.toString());
             wr.flush();
-            
+
             int responseCode = connection.getResponseCode();
             if (responseCode / 100 > 3) {
-                response.sendError(responseCode, "Bank.Put Error: "+connection.getResponseMessage());
-                return;
+                throw new TransactionUpdateException(connection.getResponseMessage());
             }
-            
+
             // read the response from the server and parse it into JsonObject
             BufferedReader rd = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
             JsonParser parser = new JsonParser();
-            JsonObject payload = parser.parse(rd).getAsJsonObject();
-            
-            JsonObject jsonResult = new JsonObject();
-            jsonResult.addProperty("result", "success");
-            jsonResult.add("payload", payload);
-            
-            response.setContentType("application/json; charset=utf-8");
-            response.setCharacterEncoding("UTF-8");
-            out = response.getWriter();
-            out.println(jsonResult.toString());
+
+            return parser.parse(rd).getAsJsonObject();
         } catch (Exception e) {
-            response.sendError(500, "Bank.Put Error: "+e.getMessage());
+            throw new TransactionUpdateException("Bank.Put Error: "+e.getMessage());
         } finally {
-        	if (connection != null) try{connection.disconnect();}catch(Exception ignore){}
-            if (out != null) try{out.close();}catch(Exception ignore){}
+            if (connection != null) try{connection.disconnect();}catch(Exception ignore){}
             if (wr != null) try{wr.close();}catch(Exception ignore){};
         }
     }

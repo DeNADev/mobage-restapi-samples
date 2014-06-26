@@ -45,4 +45,8 @@
 		<servlet-name>BankDebitPut</servlet-name>
 		<url-pattern>/bank_debit_put</url-pattern>
 	</servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BankDebitPut</servlet-name>
+        <url-pattern>/bank_debit_commit_transaction</url-pattern>
+    </servlet-mapping>
 </web-app>

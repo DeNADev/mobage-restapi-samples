@@ -93,7 +93,10 @@ app.get('/nodejs/request_token', function (req, res, next) {
             req.session.mobageAccessToken = accessToken;
             req.session.mobageAccessTokenSecret = accessTokenSecret;
             req.session.mobageOAuth2Token = results.oauth2_token;
-   
+
+            res.send({
+                oauth_token: accessToken
+            });
         }
     );
 });
