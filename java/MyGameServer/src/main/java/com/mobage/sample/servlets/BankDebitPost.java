@@ -75,7 +75,7 @@ public class BankDebitPost extends HttpServlet {
             
             // send POST
             connection.setRequestMethod("POST");
-            connection.setRequestProperty("Authorization", "bearer "+oauth2Token);
+            connection.setRequestProperty("Authorization", "Bearer "+oauth2Token);
             connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
             connection.setRequestProperty("Accept", "*/*");
             connection.setDoOutput(true);
