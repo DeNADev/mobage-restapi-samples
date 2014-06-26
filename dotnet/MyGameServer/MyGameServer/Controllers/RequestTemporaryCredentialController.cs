@@ -109,12 +109,8 @@ namespace MyGameServer.Controllers
             Session[MobageOAuth.OAUTH_TOKEN]  = temporaryToken;
             Session[MobageOAuth.OAUTH_TOKEN_SECRET] = temporaryTokenSecret;
 
-            JObject payload = new JObject();
-            payload["oauth_token"] = temporaryToken;
-
             JObject jsonResult = new JObject();
-            jsonResult["result"] = "success";
-            jsonResult["payload"] = payload;
+            jsonResult["oauth_token"] = temporaryToken;
 
             return new ContentResult { 
                 Content = jsonResult.ToString(Formatting.None), 

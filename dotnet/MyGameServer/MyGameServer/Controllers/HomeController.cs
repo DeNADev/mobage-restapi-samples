@@ -38,12 +38,8 @@ namespace MyGameServer.Controllers
 
         public ActionResult Index()
         {
-            JObject payload = new JObject();
-            payload["message"] = "Welcome to this sample!";
-
             JObject jsonResult = new JObject();
-            jsonResult["result"] = "success";
-            jsonResult["payload"] = payload;
+            jsonResult["message"] = "Welcome to this sample!";
 
             return new ContentResult
             {

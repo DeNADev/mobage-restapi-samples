@@ -126,9 +126,7 @@ namespace MyGameServer.Controllers
                 if (response != null) { response.Close(); }
             }
 
-            JObject jsonResult = new JObject();
-            jsonResult["result"] = "success";
-            jsonResult["payload"] = JObject.Parse(responseBody); ;
+            JObject jsonResult = JObject.Parse(responseBody);
 
             return new ContentResult
             {

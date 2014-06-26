@@ -31,7 +31,7 @@ $http_method  = "GET";
 $url_fragment = "/bank/inventory/@app";
 
 $auth_type = 1; // 0: consumer only, 2-legged, Trusted Model
-                // 1: OAuth 2 bearer token
+                // 1: OAuth 2 Bearer token
 if (isset($_REQUEST["type"])) {
 	$auth_type = $_REQUEST["type"];
 }
@@ -72,7 +72,7 @@ if ($auth_type == 0) {
 	$auth_header =  array($request->to_header(""));
 } else {
 	$auth_header = array(
-		"Authorization: bearer " . $datastore["oauth2_token"],
+		"Authorization: Bearer " . $datastore["oauth2_token"],
 		"Accept: */*"
 	);
 }

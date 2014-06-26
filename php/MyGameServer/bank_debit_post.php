@@ -55,7 +55,7 @@ $datastore = read_array_from_session();
 // generate Authentication Header
 $endpoint = $bank_endpoint . $url_fragment;
 $auth_header = array(
-"Authorization: bearer " . $datastore["oauth2_token"],
+"Authorization: Bearer " . $datastore["oauth2_token"],
 "Accept: */*",
 "Content-Type: application/json; charset=utf-8"
 );

@@ -75,7 +75,7 @@ public class BankDebitPost extends HttpServlet {
             
             // send POST
             connection.setRequestMethod("POST");
-            connection.setRequestProperty("Authorization", "bearer "+oauth2Token);
+            connection.setRequestProperty("Authorization", "Bearer "+oauth2Token);
             connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
             connection.setRequestProperty("Accept", "*/*");
             connection.setDoOutput(true);
@@ -93,11 +93,7 @@ public class BankDebitPost extends HttpServlet {
             // read the response from the server and parse it into JsonObject
             BufferedReader rd = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
             JsonParser parser = new JsonParser();
-            JsonObject payload = parser.parse(rd).getAsJsonObject();
-            
-            JsonObject jsonResult = new JsonObject();
-            jsonResult.addProperty("result", "success");
-            jsonResult.add("payload", payload);
+            JsonObject jsonResult = parser.parse(rd).getAsJsonObject();
             
             response.setContentType("application/json; charset=utf-8");
             response.setCharacterEncoding("UTF-8");
