@@ -136,6 +136,11 @@ namespace MyGameServer.Controllers
             ActionResult result = this.Open();
             if (result != null && result is ContentResult)
             {
+                
+                // TODO: Successfully opened transaction.
+                // Give the purchased item to the user here, step 14 in following reference
+                // https://docs.mobage.com/display/JPSA/How_to_use_the_Currency_Commerce_Services_Native
+ 
                 return this.Close();
             }
             return result;
