@@ -145,6 +145,10 @@ public class UserAuth extends HttpServlet {
             s.setAttribute(MobageOAuth.OAUTH2_TOKEN, oauth2Token);
             
             // prepares result
+            // client does not need to know about access token
+            // we pass it here just for easy testing
+            // !!! Never pass secret or oauth2_token back to client !!!
+            // you can pass back session ID instead as a key to retrieve the access token later
             JsonObject jsonResult = new JsonObject();
             jsonResult.addProperty("oauth_token", accessToken);
             

@@ -94,6 +94,10 @@ app.get('/nodejs/request_token', function (req, res, next) {
             req.session.mobageAccessTokenSecret = accessTokenSecret;
             req.session.mobageOAuth2Token = results.oauth2_token;
 
+            // client does not need to know about access token
+            // we pass it here just for easy testing
+            // !!! Never pass secret or oauth2_token back to client !!!
+            // you can pass back session ID instead as a key to retrieve the access token later
             res.send({
                 oauth_token: accessToken
             });

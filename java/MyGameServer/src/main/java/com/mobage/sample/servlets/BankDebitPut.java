@@ -111,6 +111,11 @@ public class BankDebitPut extends HttpServlet {
             JsonObject jsonResult;
 
             jsonResult = updateTransaction(transactionId, Transaction.OPEN, oauth2Token);
+
+            // TODO: Successfully opened transaction.
+            // Give the purchased item to the user here, step 14 in following reference
+            // https://docs.mobage.com/display/JPSA/How_to_use_the_Currency_Commerce_Services_Native
+
             jsonResult = updateTransaction(transactionId, Transaction.CLOSED, oauth2Token);
 
             response.setContentType("application/json; charset=utf-8");
